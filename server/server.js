@@ -1,6 +1,12 @@
 
 
 var express = require('express');
+<<<<<<< Updated upstream
+=======
+
+
+
+>>>>>>> Stashed changes
 var app = express();
 var server = app.listen(3000, function(){
     console.log("aaaaaaa");
