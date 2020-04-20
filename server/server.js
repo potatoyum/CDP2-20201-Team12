@@ -1,7 +1,4 @@
-
-
 var express = require('express');
-var mongoose = require('mongoose');
 var app = express();
 var server = app.listen(3000, function(){
     console.log("aaaaaaa");
@@ -30,7 +27,7 @@ mongoose.connect('mongodb+srv://cdp12:cdp12@cdp12-eqgsf.mongodb.net/test?retryWr
     
 });
 
-var peopleSchema = mongoose.Schema({
+var peopleSchema = mongoose.Schema({ //스키마 생성
     name:{
         type: String,
     },
@@ -39,14 +36,14 @@ var peopleSchema = mongoose.Schema({
 
 module.exports = mongoose.model('people',peopleSchema);
 
-var Person = mongoose.model('people',peopleSchema);
+var Person = mongoose.model('people',peopleSchema); //피플스키마의 모델 생성
 
-var pse= new Person({
+var pse= new Person({ 
     name: "pse",
     age: 21
 })
 
-pse.save(function(err,pse){
+pse.save(function(err,pse){ //디비에 저장
     if(err) return;
 
     //console.dir(pse);
