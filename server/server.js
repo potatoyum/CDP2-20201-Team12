@@ -28,7 +28,7 @@ mongoose.connect('mongodb+srv://cdp12:cdp12@cdp12-eqgsf.mongodb.net/test?retryWr
     
 });
 
-var peopleSchema = mongoose.Schema({ //스키마 생성
+var population = mongoose.Schema({ //스키마 생성
     id: {
         type: Number,
         required: true,
@@ -43,15 +43,15 @@ var peopleSchema = mongoose.Schema({ //스키마 생성
       },
 })
 
-module.exports = mongoose.model('people',peopleSchema);
+module.exports = mongoose.model('p_data',population);
 
-var Person = mongoose.model('people',peopleSchema); //피플스키마의 모델 생성
+var curpop = mongoose.model('p_data',population); //피플스키마의 모델 생성
 
-var pse= new Person({ 
-    id: 2,
-    count: 30
+var test= new curpop({ 
+    id: 1,
+    count: 10
 })
-pse.save(function(err,pse){ //디비에 저장
+test.save(function(err,test){ //디비에 저장
     if(err) return;
 
     //console.dir(pse);
