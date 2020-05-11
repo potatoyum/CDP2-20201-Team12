@@ -1,12 +1,12 @@
 var express = require('express');
 const mongoose = require('mongoose');
 var app = express();
-var server = app.listen(3000, function(){
+var server = app.listen(9000, function(){
     console.log("aaaaaaa");
 })
 
 app.get('/', function(req,res){
-    res.send("hellooooooooo");
+    res.send("hello");
 })
 
 var database;
