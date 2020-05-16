@@ -148,6 +148,7 @@ const cardChartOpts2 = {
   },
 };
 
+/*
 // Card Chart 3
 const cardChartData3 = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -226,6 +227,7 @@ const cardChartOpts4 = {
       }],
   },
 };
+*/
 
 // Social Box Chart
 const socialBoxData = [
@@ -382,7 +384,7 @@ const mainChart = {
   labels: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
   datasets: [
     {
-      label: 'My First dataset',
+      label: '북문',
       backgroundColor: hexToRgba(brandInfo, 10),
       borderColor: brandInfo,
       pointHoverBackgroundColor: '#fff',
@@ -390,7 +392,7 @@ const mainChart = {
       data: data1,
     },
     {
-      label: 'My Second dataset',
+      label: '동문',
       backgroundColor: 'transparent',
       borderColor: brandSuccess,
       pointHoverBackgroundColor: '#fff',
@@ -398,7 +400,7 @@ const mainChart = {
       data: data2,
     },
     {
-      label: 'My Third dataset',
+      label: '정문',
       backgroundColor: 'transparent',
       borderColor: brandDanger,
       pointHoverBackgroundColor: '#fff',
@@ -424,7 +426,8 @@ const mainChartOpts = {
   },
   maintainAspectRatio: false,
   legend: {
-    display: false,
+    display: true,
+    position: 'bottom',
   },
   scales: {
     xAxes: [
@@ -461,7 +464,7 @@ class Dashboard extends Component {
     this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
     var today = new Date(),
     //렌더링 되기 전으로 setState 바꾸기
-    date = today.getFullYear()+'년 '+(today.getMonth()+1)+'월 '+today.getDate()+'일 ';
+    date = today.getFullYear()+'년 '+(today.getMonth()+1)+'월 '+today.getDate()+'일 '+today.getHours()+'시 기준';
     this.state = {
       dropdownOpen: false,
       radioSelected: 2,
@@ -488,114 +491,12 @@ class Dashboard extends Component {
     return (
       <div className="animated fadeIn">
         <Row>
-          <Col xs="12" sm="6" lg="3">
-            <Card className="text-white bg-info">
-              <CardBody className="pb-0">
-                
-                <ButtonGroup className="float-right">
-                  <ButtonDropdown id='card1' isOpen={this.state.card1} toggle={() => { this.setState({ card1: !this.state.card1 }); }}>
-                    <DropdownToggle caret className="p-0" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem>날짜별 유동인구 확인</DropdownItem>
-                     {/* <DropdownItem>Another action</DropdownItem>
-                      <DropdownItem disabled>Disabled action</DropdownItem>
-                     <DropdownItem>Something else here</DropdownItem>*/}
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </ButtonGroup>
-                <div className="text-value">9.823</div>
-                <div>북문 유동인구 현황</div>
-              </CardBody>
-              <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-                <Line data={cardChartData2} options={cardChartOpts2} height={70} />
-              </div>
-            </Card>
-          </Col>
-
-          <Col xs="12" sm="6" lg="3">
-            <Card className="text-white bg-primary">
-              <CardBody className="pb-0">
-              <ButtonGroup className="float-right">
-                  <ButtonDropdown id='card1' isOpen={this.state.card2} toggle={() => { this.setState({ card2: !this.state.card2}); }}>
-                    <DropdownToggle caret className="p-0" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem>날짜별 유동인구 확인</DropdownItem>
-                     {/* <DropdownItem>Another action</DropdownItem>
-                      <DropdownItem disabled>Disabled action</DropdownItem>
-                     <DropdownItem>Something else here</DropdownItem>*/}
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </ButtonGroup>
-                <div className="text-value">9.823</div>
-                <div>서문 유동인구 현황</div>
-              </CardBody>
-              <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-                <Line data={cardChartData1} options={cardChartOpts1} height={70} />
-              </div>
-            </Card>
-          </Col>
-
-          <Col xs="12" sm="6" lg="3">
-            <Card className="text-white bg-info">
-              <CardBody className="pb-0">
-                
-                <ButtonGroup className="float-right">
-                  <ButtonDropdown id='card1' isOpen={this.state.card3} toggle={() => { this.setState({ card3: !this.state.card3 }); }}>
-                    <DropdownToggle caret className="p-0" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem>날짜별 유동인구 확인</DropdownItem>
-                     {/* <DropdownItem>Another action</DropdownItem>
-                      <DropdownItem disabled>Disabled action</DropdownItem>
-                     <DropdownItem>Something else here</DropdownItem>*/}
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </ButtonGroup>
-                <div className="text-value">9.823</div>
-                <div>북문 유동인구 현황</div>
-              </CardBody>
-              <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-                <Line data={cardChartData2} options={cardChartOpts2} height={70} />
-              </div>
-            </Card>
-          </Col>
-{/*
-          <Col xs="12" sm="6" lg="3">
-            <Card className="text-white bg-danger">
-              <CardBody className="pb-0">
-                <ButtonGroup className="float-right">
-                  <ButtonDropdown id='card4' isOpen={this.state.card4} toggle={() => { this.setState({ card4: !this.state.card4 }); }}>
-                    <DropdownToggle caret className="p-0" color="transparent">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem>Action</DropdownItem>
-                      <DropdownItem>Another action</DropdownItem>
-                      <DropdownItem>Something else here</DropdownItem>
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </ButtonGroup>
-                <div className="text-value">9.823</div>
-                <div>Members online</div>
-              </CardBody>
-              <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-                <Bar data={cardChartData4} options={cardChartOpts4} height={70} />
-              </div>
-            </Card>
-</Col>*/}
-        </Row>
-        <Row>
           <Col>
             <Card>
               <CardBody>
                 <Row>
                   <Col sm="5">
-                    <CardTitle className="mb-0"><strong>경북대학교 유동인구 추이</strong></CardTitle>
+                    <CardTitle className="mb-0"><strong>경북대학교 실시간 유동인구 통계</strong></CardTitle>
                     <div className="small text-muted">{this.state.date}</div>
                   </Col>
                   {/*
@@ -610,11 +511,11 @@ class Dashboard extends Component {
                     </ButtonToolbar>
                   </Col>*/}
                 </Row>
-                <div className="chart-wrapper" style={{ height: 300 + 'px', marginTop: 40 + 'px' }}>
-                  <Line data={mainChart} options={mainChartOpts} height={300} />
+                <div className="chart-wrapper" style={{ height: 380 + 'px', marginTop: 40 + 'px' }}>
+                  <Line data={mainChart} options={mainChartOpts} height={380} />
                 </div>
               </CardBody>
-              <CardFooter>
+              {/*<CardFooter>
                 <Row className="text-center">
                   <Col sm={12} md className="mb-sm-2 mb-0">
                     <div className="text-muted">Visits</div>
@@ -642,7 +543,7 @@ class Dashboard extends Component {
                     <Progress className="progress-xs mt-2" color="primary" value="40" />
                   </Col>
                 </Row>
-              </CardFooter>
+              </CardFooter>*/}
             </Card>
           </Col>
         </Row>
