@@ -1,13 +1,19 @@
 var express = require('express');
 const mongoose = require('mongoose');
 var app = express();
-var server = app.listen(9000, function(){
+const cors= require('cors');
+const bodyParser = require('body-parser');
+var server = app.listen(3001, function(){
     console.log("aaaaaaa");
 })
 
 app.get('/', function(req,res){
     res.send("hello");
 })
+
+app.use(cors());
+app.use('/api', (req,res)=>  res.json({username:'aaaaa'}));
+
 
 var database;
 var db = mongoose.connection;
