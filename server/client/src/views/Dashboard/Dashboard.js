@@ -456,6 +456,8 @@ const mainChartOpts = {
   },
 };
 
+
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -468,7 +470,8 @@ class Dashboard extends Component {
     this.state = {
       dropdownOpen: false,
       radioSelected: 2,
-      date: date
+      date: date,
+      username: null
     };
   }
 
@@ -486,10 +489,22 @@ class Dashboard extends Component {
 
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
+  componentDidMount(){
+    fetch('http://localhost:3001/api')
+      .then(res=>res.json())
+      .then(data=>this.setState({username: data.username}));
+  };
+
   render() {
+    const {username} = this.state;
 
     return (
       <div className="animated fadeIn">
+        <header>
+          {username ? `Hello ${username}` : 'Hello world'}
+          
+        </header>
+
         <Row>
           <Col>
             <Card>
