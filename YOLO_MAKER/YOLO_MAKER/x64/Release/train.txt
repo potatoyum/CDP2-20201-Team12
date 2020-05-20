@@ -1,2 +1,0 @@
-./x64/Release/data/img/20200229_213956_909_1.jpg.tn640.jpg
-./x64/Release/data/img/5dbe6048200000a840507896.jpg
