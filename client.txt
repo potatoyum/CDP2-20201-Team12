@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <time.h>
+
+#define BUF_SIZE 30
+
+void ErrorHandling(char*message) {
+	fputs(message, stderr);
+	fputc('\n', stderr);
+	exit(1);
+}
+int CalcHour() {
+	//return (time(0) / 60) % 60;
+	return (time(0) / 60 / 60 + 9) % 24;
+}
+
+int main(void) {
+	int sd;
+	FILE * fp;
+
+	int preHour, curHour;
+
+	char buf[BUF_SIZE];
+	int read_cnt;
+	struct sockaddr_in serv_adr;
+
+	preHour = CalcHour();
+
+	fp = fopen("count_result.txt", "rb");
+	sd = socket(PF_INET, SOCK_STREAM, 0);
+
+	if (sd == -1)
+		ErrorHandling("socket() error");
+
+	memset(&serv_adr, 0, sizeof(serv_adr));
+	serv_adr.sin_family = AF_INET;
+	serv_adr.sin_addr.s_addr = inet_addr("192.168.0.11");
+	serv_adr.sin_port = htons(atoi("9190"));
+
+	if (connect(sd, (struct sockaddr*)&serv_adr, sizeof(serv_adr)) == -1)
+		ErrorHandling("connect() error");
+	while (1) {
+		curHour = CalcHour();
+		if (preHour != curHour) {
+			while (1) {
+				read_cnt = fread((void*)buf, 1, BUF_SIZE, fp);
+				if (read_cnt < BUF_SIZE) {
+					write(sd, buf, read_cnt);
+					break;
+				}
+				write(sd, buf, BUF_SIZE);
+			}
+			fclose(fp);
+			close(sd);
+			preHour = curHour;
+			printf("complete\n");
+			fp = fopen("count_result.txt", "rb");
+			sd = socket(PF_INET, SOCK_STREAM, 0);
+
+			if (connect(sd, (struct sockaddr*)&serv_adr, sizeof(serv_adr)) == -1)
+				ErrorHandling("connect() error");
+		}
+		sleep(30);
+	}
+
+	fclose(fp);
+	close(sd);
+
+	return 0;
+}
