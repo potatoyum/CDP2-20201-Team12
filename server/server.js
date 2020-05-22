@@ -60,11 +60,6 @@ module.exports = mongoose.model('p_data',population);//유동인구
 
 var curpop = mongoose.model('p_data',population); //피플스키마의 모델 생성
 
-<<<<<<< Updated upstream
-var test= new curpop({ 
-    id: 1,
-    count: 10
-=======
 //그냥 아무 값으로 설정 client에서 값 받아오면 여기에 저장해서 갖다가 사용할 예정...
 //보드에서 받아온값 저장할때 게속 사용하면됨 다 저장하고 나면 주석처리하든 맨마지막에서 저장을 막든
 var board_id = 1;
@@ -75,12 +70,12 @@ var test= new curpop({
     count: board_countt,
     date : datee,
     sign : null
->>>>>>> Stashed changes
 })
 //////////////////////////////////////////////////
+//값을 넣으면서 바로 그 값을 반영할수는 없음 DB에 왔다 갔다 해야 정보를 알 수 있으니까....
 
 var sum1 = 0, sum2=0, hourlyid1 = 0, hourlyid2 = 0;
-//한시간 마다 원하는 시간을 입력해 주면 됨,,,
+//원하는 시간을 입력해 주면 됨
 // 같은 id끼리 그룹을 만들어서 count들을 다 합쳐줬음
 curpop.aggregate([
     { $match: { date : "2020-05-23 05" } },
@@ -120,7 +115,7 @@ curpop.aggregate([
 });
 
 var choiceid = 0, choicecount = 0;
-//hour즉 1시간자리 통계인것만 db에서 들고와서 var에 저장 밑 콘솔 출력 (원하는 시간 입력해야함..)
+//hour즉 1시간짜리 통계인것만(sign사용) db에서 들고와서 var에 저장 밑 콘솔 출력 (원하는 시간 입력해야함..)
 curpop.aggregate([
     { $match: { sign: "hour" } },
     { $match: { date: "2020-05-23 05" }},
@@ -137,11 +132,4 @@ test.save(function(err, test){ //DB에 저장 이걸 막아놔도 create는 못�
     //console.dir(test)
 })
 
-//값을 넣으면서 바로 그 값을 반영할수는 없음 DB에 왔다 갔다 해야 정보를 알 수 있으니까....
 
-<<<<<<< Updated upstream
-    //console.dir(pse);
-})
-
-=======
->>>>>>> Stashed changes
