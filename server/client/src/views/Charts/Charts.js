@@ -36,7 +36,7 @@ class DatePick extends React.Component {
  
   render() {
     //console.log((this.state.startDate.getMonth() + 1) + "월" + this.state.startDate.getDate() + "일 선택됨");
-   
+    
     this.props.onClick(this.state.startDate);
     //console.log(this.state.startDate);
     return (
@@ -47,7 +47,7 @@ class DatePick extends React.Component {
         dateFormat="yyyy년 MM월 dd일"
         className="form-control"
         customInput={<ExampleCustomInput/>}
-        //onClick={function(e) {
+        //onClick={function() {
         //  this.props.onClick(e.target.selected);
         //}.bind(this)}
       />
@@ -119,6 +119,7 @@ class Charts extends Component {
       dropDownValue: '지역 선택',
       list:[],
       cam_id: 0,
+      startDate: new Date(),
       date: '',
       bar: {
         labels: ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9', '9-10', '10-11', '11-12', '12-13', '13-14', '14-15', '15-16', '16-17', '17-18', '18-19', '19-20', '20-21', '21-22', '22-23', '23-24'],
@@ -142,38 +143,44 @@ class Charts extends Component {
       dropdownOpen: !this.state.dropdownOpen,
     });
   }
+  getDate = inputDate => {
+    var strdate, year, month, date = '';
+//    var startDate= this.state.startDate;
+
+    year = inputDate.getFullYear();
+    if ((inputDate.getMonth() + 1) < 10)
+      month = '0' + (inputDate.getMonth() + 1);
+    else
+      month = '' + (inputDate.getMonth() + 1);
+    if (inputDate.getDate() < 10)
+      date = '0' + (inputDate.getDate());
+    else
+      date = '' + inputDate.getDate();
+
+    strdate = year + month + date;
+
+    this.setState({
+      startDate: inputDate,
+      date: strdate
+    })
+
+    console.log(this.state.date+"strdate");
+  }
+
   render() {
     return (
       <div className="animated fadeIn">
         <Row>
         <Col>
-            <DatePick onClick={() => function(startDate){
-              //
-              var strdate, year, month, date = '';
-              year = startDate.getFullYear();
-              if ((startDate.getMonth() + 1) < 10)
-                month = '0' + (startDate.getMonth() + 1);
-              else
-                month = '' + (startDate.getMonth() + 1);
-              if (startDate.getDate() < 10)
-                date = '0' + (startDate.getDate());
-              else
-                date = '' + startDate.getDate();
-
-              strdate = year + month + date;
-              console.log(strdate);
-              //console.log(startDate.getFullYear() + "년 " + (startDate.getMonth()+1) + "월 " + startDate.getDate() + "일");
-
-              //this.setState({
-              //  dropdownOpen: this.state.dropdownOpen,
-              //  dropDownValue: this.state.dropDownValue,
-              //  list: this.state.list,
-              //  cam_id: this.state.cam_id,
-              //  date: strdate,
-              //  bar: this.state.bar
-              //});
-              console.log(this.state.date + '// data state value');
-            }.bind(this)} />
+            
+            <DatePicker
+              selected ={this.state.startDate}
+              onChange={this.getDate} 
+              className="form-control"  
+              maxDate={new Date()}
+              dateFormat="yyyy년 MM월 dd일"
+              customInput={<ExampleCustomInput/>}
+            />
           </Col>
           <Col>
             <Dropdown id='card1' isOpen={this.state.card1} toggle={() => { this.setState({ card1: !this.state.card1 }); }} style={{marginLeft: 500 + 'px' }}>
@@ -193,7 +200,7 @@ class Charts extends Component {
                     })
                     .then(function(json){
                       
-                      console.log(id + '_' + this.state.date + '.json');
+                      
                       this.setState({list:json});
                         var li = this.state.list;
                         var count = li.count;
@@ -204,10 +211,15 @@ class Charts extends Component {
                         cam_id: id,
                         date: this.state.date,
                         bar: {
-                          labels: this.state.bar.lables,
+                          labels: ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9', '9-10', '10-11', '11-12', '12-13', '13-14', '14-15', '15-16', '16-17', '17-18', '18-19', '19-20', '20-21', '21-22', '22-23', '23-24'],
                           datasets: [
                             {
-                              label: this.state.bar.datasets[0].label,
+                              label: '유동인구 수',
+                              backgroundColor: 'rgba(255,99,132,0.2)',
+                              borderColor: 'rgba(255,99,132,1)',
+                              borderWidth: 1,
+                              hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                              hoverBorderColor: 'rgba(255,99,132,1)',
                               data: count,
                             },
                           ],
@@ -219,32 +231,6 @@ class Charts extends Component {
                 }.bind(this)}></DropDownItem>
               </DropdownMenu>
             </Dropdown>
-          </Col>
-          <Col>
-            <Button color="primary" onClick={function(){
-              //console.log(this.state.date.getDate().toString);
-              this.setState({
-                dropdownOpen: this.state.dropdownOpen,
-                dropDownValue: this.state.dropDownValue,
-                list: this.state.list,
-                cam_id: this.state.cam_id,
-                date: this.state.date,
-                bar : {
-                  labels: this.state.bar.labels,
-                  datasets: [
-                    {
-                      label: '유동인구 수',
-                      backgroundColor: 'rgba(255,99,132,0.2)',
-                      borderColor: 'rgba(255,99,132,1)',
-                      borderWidth: 1,
-                      hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-                      hoverBorderColor: 'rgba(255,99,132,1)',
-                      data: this.state.data,
-                    },
-                  ],
-                }
-              })
-            }.bind(this)}>선택</Button>
           </Col>
         </Row>
           
