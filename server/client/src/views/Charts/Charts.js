@@ -194,7 +194,11 @@ class Charts extends Component {
                   console.log(id);
                   //this.setState({cam_id: id});
                   //console.log(this.state.cam_id + '클릭클릭');
-                  fetch(id + '_' + this.state.date + '.json')
+                  if(this.state.date === '')
+                    alert('날짜를 먼저 선택해 주세요.');
+                  else{
+                    //
+                    fetch(id + '_' + this.state.date + '.json')
                     .then(function(result){
                       return result.json();
                     })
@@ -228,6 +232,9 @@ class Charts extends Component {
                       
                       //console.log(this.state.cam_id + ' camer is clickkkkkkeeeedddd');
                     }.bind(this))
+                    .catch(error => alert('해당 날짜와 지역에 데이터가 없습니다!'))
+                  }
+                  
                 }.bind(this)}></DropDownItem>
               </DropdownMenu>
             </Dropdown>
