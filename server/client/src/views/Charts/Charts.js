@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Bar, Doughnut, Line, Pie, Polar, Radar, defaults } from 'react-chartjs-2';
-import { Card, CardBody, CardColumns, CardHeader, Row, Col } from 'reactstrap';
+import { Bar } from 'react-chartjs-2';
+import { Card, CardBody, CardHeader, Row, Col, CardTitle } from 'reactstrap';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-//import DatePickerInput from '../DatePicker/DatePickerInput';
 
 import "react-datepicker/dist/react-datepicker.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,46 +14,6 @@ import {
   Button
 } from 'reactstrap';
 
-const ExampleCustomInput = ({ value, onClick }) => (
-  <Button color="secondary" className="example-custom-input" onClick={onClick}>
-    {value}
-  </Button>
-);
-
-class DatePick extends React.Component {
-  state = {
-    startDate: new Date(),
-  };
- 
-  handleChange = date => {
-    this.setState({
-      startDate: date
-    });
-    
-    //console.log(this.state.startDate.getMonth() + "월" + this.state.startDate.getDate() + "일");
-  };
- 
-  render() {
-    //console.log((this.state.startDate.getMonth() + 1) + "월" + this.state.startDate.getDate() + "일 선택됨");
-    
-    this.props.onClick(this.state.startDate);
-    //console.log(this.state.startDate);
-    return (
-      <DatePicker
-        selected={this.state.startDate}
-        onChange={this.handleChange}
-        maxDate={new Date()}
-        dateFormat="yyyy년 MM월 dd일"
-        className="form-control"
-        customInput={<ExampleCustomInput/>}
-        //onClick={function() {
-        //  this.props.onClick(e.target.selected);
-        //}.bind(this)}
-      />
-    );
-  }
-}
-
 const options = {
   tooltips: {
     enabled: false,
@@ -62,30 +21,33 @@ const options = {
   },
   scales: {
     yAxes: [{
-        ticks: {
-            beginAtZero:true,
-            min: 0,  
-        }
-      }]
-   },
+      ticks: {
+        beginAtZero: true,
+        min: 0,
+      }
+    }],
+    xAxes: [{
+      barPercentage: 0.8
+    }]
+  },
   maintainAspectRatio: false,
   legend: {
     onClick: null
   }
 }
 
-class DropDownItem extends Component{
+class DropDownItem extends Component {
   state = {
-    list:[]
+    list: []
   }
-  componentDidMount(){
+  componentDidMount() {
     fetch('list.json')
-      .then(function(result){
+      .then(function (result) {
         return result.json();
       })
-      .then(function(json){
+      .then(function (json) {
         console.log(json);
-        this.setState({list:json});
+        this.setState({ list: json });
       }.bind(this));
   }
   render() {
@@ -113,30 +75,87 @@ class Charts extends Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
-  
+    this.setChart = this.setChart.bind(this);
+
     this.state = {
       dropdownOpen: false,
       dropDownValue: '지역 선택',
-      list:[],
+      list: [],
       cam_id: 0,
       startDate: new Date(),
+      barBackground: [],
       date: '',
       bar: {
         labels: ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9', '9-10', '10-11', '11-12', '12-13', '13-14', '14-15', '15-16', '16-17', '17-18', '18-19', '19-20', '20-21', '21-22', '22-23', '23-24'],
         datasets: [
           {
             label: '유동인구 수',
-            backgroundColor: 'rgba(255,99,132,0.2)',
-            borderColor: 'rgba(255,99,132,1)',
+            backgroundColor: 'rgba(18,171,184,0.1)',
+            borderColor: 'rgba(12,119,128,1)',
             borderWidth: 1,
-            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-            hoverBorderColor: 'rgba(255,99,132,1)',
+            hoverBackgroundColor: 'rgba(18,171,184,0.5)',
+            hoverBorderColor: 'rgba(12,119,128,1)',
             data: [],
           },
         ],
       }
     };
+  }
+  setChart(id, title, count) {
+    var min = count[0], max = count[0], range;
+    var barBackground = [];
+    for(var i = 0; i < count.length; i++){
+      if(min < count[i])
+        min = min;
+      else
+        min = count[i];
+
+      if(max > count[i])
+        max = max;
+      else
+        max = count[i];
+    }
+    range = (max - min) / 5;
+
+    for (var i = 0; i < 24; i++){
+        if(count[i] < min + (range * 1))
+          barBackground[i] = 'rgba(18,171,184,0.2)';
+        else if(count[i] >= min + (range * 1) && count[i] < min + (range * 2))
+          barBackground[i] = 'rgba(18,171,184,0.4)';
+        else if(count[i] >= min + (range * 2) && count[i] < min + (range * 3))
+          barBackground[i] = 'rgba(18,171,184,0.6)';
+        else if(count[i] >= min + (range * 3) && count[i] < min + (range * 4))
+          barBackground[i] = 'rgba(18,171,184,0.7)';
+        else if(count[i] >= min + (range * 4) && count[i] <= min + (range * 5))
+          barBackground[i] = 'rgba(18,171,184,0.8)';
+      
+    }
+
+    console.log(barBackground);
+
+    this.setState({
+      dropdownOpen: this.state.dropdownOpen,
+      dropDownValue: title,
+      list: this.state.list,
+      cam_id: id,
+      date: this.state.date,
+      bar: {
+        labels: ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9', '9-10', '10-11', '11-12', '12-13', '13-14', '14-15', '15-16', '16-17', '17-18', '18-19', '19-20', '20-21', '21-22', '22-23', '23-24'],
+        datasets: [
+          {
+            label: '유동인구 수',
+            backgroundColor: barBackground,
+            borderColor: 'rgba(12,119,128,1)',
+            borderWidth: 1,
+            hoverBackgroundColor: 'rgba(18,171,184,0.5)',
+            hoverBorderColor: 'rgba(12,119,128,1)',
+            data: count,
+          },
+        ],
+      }
+    })
     
+
   }
   toggle() {
     this.setState({
@@ -145,7 +164,6 @@ class Charts extends Component {
   }
   getDate = inputDate => {
     var strdate, year, month, date = '';
-//    var startDate= this.state.startDate;
 
     year = inputDate.getFullYear();
     if ((inputDate.getMonth() + 1) < 10)
@@ -164,94 +182,78 @@ class Charts extends Component {
       date: strdate
     })
 
-    console.log(this.state.date+"strdate");
+    console.log(this.state.date + "strdate");
   }
 
   render() {
     return (
       <div className="animated fadeIn">
-        <Row>
-        <Col>
-            
-            <DatePicker
-              selected ={this.state.startDate}
-              onChange={this.getDate} 
-              className="form-control"  
+        <Row  style={{ paddingTop: 50 + 'px', height: 80 + '%' }} className="align-items-center">
+          <Col style={{height: "100%"}}>
+            <Card style={{backgroundColor: '#f7f9fb'}}>
+              <CardTitle className="text-center" tag="h3" style={{ marginTop: 20 + 'px' }}>
+                {this.state.dropDownValue} , {this.state.startDate.getFullYear()}/{this.state.startDate.getMonth() + 1}/{this.state.startDate.getDate()}
+              </CardTitle>
+              <CardBody>
+                <div className="chart-wrapper">
+                  <Bar data={this.state.bar} options={options} height="400px"/>
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col xs="auto">
+            <DatePicker 
+              placeholderText="날짜 선택"
+              selected={this.state.startDate}
+              onChange={this.getDate}
+              className="form-control"
               maxDate={new Date()}
               dateFormat="yyyy년 MM월 dd일"
-              customInput={<ExampleCustomInput/>}
+              inline
+              fixedHeight
             />
-          </Col>
-          <Col>
-            <Dropdown id='card1' isOpen={this.state.card1} toggle={() => { this.setState({ card1: !this.state.card1 }); }} style={{marginLeft: 500 + 'px' }}>
-              <DropdownToggle caret style={{width: 100 + 'px'}}>
+
+            <Dropdown id='card1' isOpen={this.state.card1} toggle={() => { this.setState({ card1: !this.state.card1 }); }} style={{ marginBottom: "80px"}}>
+              <DropdownToggle caret style={{ width: 100 + '%'}} color="info">
                 {this.state.dropDownValue}
               </DropdownToggle>
-              <DropdownMenu>
+              <DropdownMenu style={{ width: 100 + '%'}}>
                 <DropdownItem disabled>지역 선택</DropdownItem>
                 <DropdownItem divider />
-                <DropDownItem onClick={function(id, title){
+                <DropDownItem onClick={function (id, title) {
                   console.log(id);
-                  //this.setState({cam_id: id});
-                  //console.log(this.state.cam_id + '클릭클릭');
-                  if(this.state.date === '')
+                  if (this.state.date === '')
                     alert('날짜를 먼저 선택해 주세요.');
-                  else{
+                  else {
                     //
                     fetch(id + '_' + this.state.date + '.json')
-                    .then(function(result){
-                      return result.json();
-                    })
-                    .then(function(json){
-                      
-                      
-                      this.setState({list:json});
+                      .then(function (result) {
+                        return result.json();
+                      })
+                      .then(function (json) {
+
+
+                        this.setState({ list: json });
                         var li = this.state.list;
                         var count = li.count;
-                      this.setState({
-                        dropdownOpen: this.state.dropdownOpen,
-                        dropDownValue: title,
-                        list: this.state.list,
-                        cam_id: id,
-                        date: this.state.date,
-                        bar: {
-                          labels: ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9', '9-10', '10-11', '11-12', '12-13', '13-14', '14-15', '15-16', '16-17', '17-18', '18-19', '19-20', '20-21', '21-22', '22-23', '23-24'],
-                          datasets: [
-                            {
-                              label: '유동인구 수',
-                              backgroundColor: 'rgba(255,99,132,0.2)',
-                              borderColor: 'rgba(255,99,132,1)',
-                              borderWidth: 1,
-                              hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-                              hoverBorderColor: 'rgba(255,99,132,1)',
-                              data: count,
-                            },
-                          ],
-                        }
-                      })
+                        
+                        this.setChart(id, title, count);
+
+                      }.bind(this))
+                      .catch(error => alert('해당 날짜와 지역에 데이터가 없습니다!'))
+
                       
-                      //console.log(this.state.cam_id + ' camer is clickkkkkkeeeedddd');
-                    }.bind(this))
-                    .catch(error => alert('해당 날짜와 지역에 데이터가 없습니다!'))
+                      
                   }
-                  
+
                 }.bind(this)}></DropDownItem>
               </DropdownMenu>
             </Dropdown>
           </Col>
         </Row>
-          
-          <Card style={{marginTop: 40 + 'px' }}>
-            <CardHeader>
-              {this.state.dropDownValue}
-            </CardHeader>
-            <CardBody>
-              <div className="chart-wrapper">
-                <Bar data={this.state.bar} options={options} height = {300}/>
-              </div>
-            </CardBody>
-          </Card>
-          
+
+
+
       </div>
     );
   }
