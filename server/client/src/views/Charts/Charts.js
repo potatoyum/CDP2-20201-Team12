@@ -11,7 +11,6 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
-  Button
 } from 'reactstrap';
 
 const options = {
@@ -85,12 +84,16 @@ class Charts extends Component {
       startDate: new Date(),
       barBackground: [],
       date: '',
+      cardTitleValue:{
+        date: '(날짜 선택)',
+        area: '(지역 선택)',
+      },
       bar: {
         labels: ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9', '9-10', '10-11', '11-12', '12-13', '13-14', '14-15', '15-16', '16-17', '17-18', '18-19', '19-20', '20-21', '21-22', '22-23', '23-24'],
         datasets: [
           {
             label: '유동인구 수',
-            backgroundColor: 'rgba(18,171,184,0.1)',
+            backgroundColor: 'rgba(18,171,184,0.5)',
             borderColor: 'rgba(12,119,128,1)',
             borderWidth: 1,
             hoverBackgroundColor: 'rgba(18,171,184,0.5)',
@@ -138,7 +141,11 @@ class Charts extends Component {
       dropDownValue: title,
       list: this.state.list,
       cam_id: id,
-      date: this.state.date,
+      date: this.state.date, 
+      cardTitleValue: {
+        date: this.state.startDate.getFullYear() +'.'+ (this.state.startDate.getMonth() + 1) + '.' + this.state.startDate.getDate(),
+        area: title
+      },
       bar: {
         labels: ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9', '9-10', '10-11', '11-12', '12-13', '13-14', '14-15', '15-16', '16-17', '17-18', '18-19', '19-20', '20-21', '21-22', '22-23', '23-24'],
         datasets: [
@@ -192,7 +199,7 @@ class Charts extends Component {
           <Col style={{height: "100%"}}>
             <Card style={{backgroundColor: '#f7f9fb'}}>
               <CardTitle className="text-center" tag="h3" style={{ marginTop: 20 + 'px' }}>
-                {this.state.dropDownValue} , {this.state.startDate.getFullYear()}/{this.state.startDate.getMonth() + 1}/{this.state.startDate.getDate()}
+                {this.state.cardTitleValue.date} {this.state.cardTitleValue.area}
               </CardTitle>
               <CardBody>
                 <div className="chart-wrapper">
