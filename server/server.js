@@ -8,21 +8,30 @@ var server = app.listen(3001, function(){
 })
 var io = require('socket.io').listen(9001);
 var roomName;
-
+var arr_counting = [];
+var count = 0;
 io.on('connection', function(socket){
     console.log('connect');
     var instanceId= socket.id;
 
-    socket.on('joinRoom',function (data) {
-        console.log(data);
-        socket.join(data.roomName);
-        roomName = data.roomName;
-    });
+    console.log(instanceId);
 
     socket.on('reqMsg', function (data) {
         console.log(data);
     });
 
+    socket.on('sendValue',function(data){
+        
+        arr_counting.push(data);
+        count = count +1;
+
+        console.log(arr_counting);
+    })
+//    socket.on('joinRoom',function (data) {
+//        console.log(data);
+//        socket.join(data.roomName);
+//        roomName = data.roomName;
+//    });
 })
 
 app.get('/', function(req,res){
