@@ -6,6 +6,24 @@ const bodyParser = require('body-parser');
 var server = app.listen(3001, function(){
     console.log("aaaaaaa");
 })
+var io = require('socket.io').listen(9001);
+var roomName;
+
+io.on('connection', function(socket){
+    console.log('connect');
+    var instanceId= socket.id;
+
+    socket.on('joinRoom',function (data) {
+        console.log(data);
+        socket.join(data.roomName);
+        roomName = data.roomName;
+    });
+
+    socket.on('reqMsg', function (data) {
+        console.log(data);
+    });
+
+})
 
 app.get('/', function(req,res){
     res.send("hello");
