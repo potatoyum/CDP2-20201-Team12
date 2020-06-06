@@ -56,11 +56,12 @@ componentWillMount() {
   render() {
     return (
       <div>
-        <h2 style = {{marginLeft:400+'px'}}><strong>실시간 경북대 인근 유동인구</strong></h2><br/>
-        <div style={{ height: 480 + 'px', marginTop: 30 + 'px',marginLeft: 430+'px',float:'left'}}>
+        <div style={{ height: 480 + 'px', marginTop: 100 + 'px',marginLeft: 200+'px',float:'left'}}>
         <Doughnut data={this.state} options = {this.option} height = {400} />
         </div>
-        <div style = {{float:'left',marginLeft: 50+'px',marginTop: 100+'px',fontSize: 30+'px'}}> 
+        <div style = {{float:'left',marginLeft: 150+'px',marginTop: 150+'px',fontSize: 30+'px'}}> 
+        
+        <div style = {{fontSize: 35+'px'}}><strong>실시간 경북대 인근 유동인구</strong></div><br/>
         <div style = {{fontSize: 25+'px'}}>
         최근 한시간 동안 
         </div>
