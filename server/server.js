@@ -4,7 +4,7 @@ var app = express();
 const cors= require('cors');
 const bodyParser = require('body-parser');
 var server = app.listen(3001, function(){
-    console.log("aaaaaaa");
+    console.log("aaaaaaaa");
 })
 
 app.get('/', function(req,res){
