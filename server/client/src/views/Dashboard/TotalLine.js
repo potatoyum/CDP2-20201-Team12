@@ -1,7 +1,7 @@
-import React, { Component,lazy, Suspense } from 'react';
+import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities'
+import { getStyle } from '@coreui/coreui/dist/js/coreui-utilities'
 const brandSuccess = getStyle('--success')
 const brandInfo = getStyle('--info')
 const brandDanger = getStyle('--danger')
@@ -61,7 +61,7 @@ class TotalLine extends Component {
 
  getData = () => {
      return ({
-    labels: ['00:00-01:00', '01:00-02:00', '02:00-03:00', '03:00-04:00', '04:00-05:00', '05:00-06:00', '06:00-0700','07:00-08:00','08:00-09:00', '09:00-10:00','10:00-11:00', '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', '22:00-23:00', '23:00-24:00'],
+    labels: ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7','7-8','8-9', '9-10','10-11', '11-12', '12-13', '13-14', '14-15', '15-16', '16-17', '17-18', '18-19', '19-20', '20-21', '21-22', '22-23', '23-24'],
     datasets: [
       {
         label: '북문',
@@ -121,7 +121,7 @@ getMainChartOpts = () => {
           ticks: {
             beginAtZero: true,
             maxTicksLimit: 5,
-            stepSize: Math.ceil(80 / 5),
+            stepSize: Math.ceil(40 / 5),
             max: 80,
           },
         }],

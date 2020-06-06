@@ -1,4 +1,4 @@
-import React, { Component, lazy, Suspense } from 'react';
+import React, { Component } from 'react';
 import DynamicDoughnut from './DynamicDoughnut'
 import TotalLine from './TotalLine'
 import {
@@ -28,7 +28,6 @@ class Dashboard extends React.Component {
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
   render() {
-
     return (
       <div className="animated fadeIn">
 

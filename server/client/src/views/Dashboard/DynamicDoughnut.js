@@ -20,6 +20,16 @@ getJeongPeople = ()=>{
 getTotal = () =>{
   return this.getSeoPeople()+this.getBukPeople()+this.getJeongPeople();
 }
+getIncDec = () =>{
+  //한시간 전 것과 비교
+  var diff = this.getTotal() - 10;
+   if(diff>=0)
+            return'+'+ diff;
+   else
+            {
+              return diff;
+            }
+}
  getState = () => ({
 
   labels: [
@@ -60,17 +70,21 @@ componentWillMount() {
         <Doughnut data={this.state} options = {this.option} height = {400} />
         </div>
         <div style = {{float:'left',marginLeft: 150+'px',marginTop: 150+'px',fontSize: 30+'px'}}> 
-        
         <div style = {{fontSize: 35+'px'}}><strong>실시간 경북대 인근 유동인구</strong></div><br/>
         <div style = {{fontSize: 25+'px'}}>
         최근 한시간 동안 
         </div>
-        <div style={{height:50+'px', width:100+'px',backgroundColor : 'white',textAlign:'center',borderRadius:12+'px',marginTop:10+'px',marginBottom:10+'px'}}>
+        <div style = {{width:100+'%'}}>
+        <div style={{height:50+'px', width:200+'px',backgroundColor : 'white',textAlign:'center',borderRadius:12+'px',marginTop:10+'px',marginBottom:10+'px'}}>
         <CountUp start={0} end={this.getTotal()} />
-        명</div>
+        명  (<span>{this.getIncDec()}</span>)
+        </div>
+        </div>
         <div style = {{fontSize: 25+'px'}} >
         의 유동인구가 있습니다.
-          </div> 
+          </div>
+          <div>
+            </div> 
         </div>
 
       </div>
