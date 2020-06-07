@@ -37,7 +37,6 @@ mongoose.connect('mongodb+srv://cdp12:cdp12@cdp12-eqgsf.mongodb.net/test?retryWr
 var population = mongoose.Schema({ //보드에서 들어오는 유동인구 측정 데이터를 위한 스키마 생성
     camera_id: {
         type: String,
-        unique : true
       },
     date: {
         type: String,
@@ -148,9 +147,7 @@ return resultarr
 var rawresult = groupBy(arr, 'camera_id', 'date','hour');
 
 var result = rawresult.filter((arr, index, self) =>
-index === self.findIndex((t) => (t.camera_id === arr.camera_id && t.date === arr.date && t.hour === arr.hour)))
-
-//console.log(clean[0].Phase);
+index === self.findIndex((t) => (  t.date === arr.date && t.camera_id === arr.camera_id&& t.hour === arr.hour)))
   
 for(var i=0; i<result.length; i++){
           var test= new curpop({ 
@@ -158,12 +155,14 @@ for(var i=0; i<result.length; i++){
               date: result[i].date,
               hour : result[i].hour,
               counting: result[i].counting,
-          },
-          {
-            unique: true
           })
-          console.log(test);
-          /*test.save(function(err, test){ //DB에 저장 이걸 막아놔도 create는 못막지만 사용시 접근을 id갯수만큼만 하니까 그닥 상관 없음
-              if(err) return console.log("디비에 저장에러");
-              //console.dir(test)*/
+          test.save(function(err, test){
+            if(err) return console.log("에러남");
+            //console.dir(test);
+          });
 }
+
+
+
+
+
