@@ -158,7 +158,6 @@ for(var i=0; i<result.length; i++){
           })
           test.save(function(err, test){
             if(err) return console.log("에러남");
-            //console.dir(test);
           });
 }
 
