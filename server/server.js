@@ -35,17 +35,17 @@ mongoose.connect('mongodb+srv://cdp12:cdp12@cdp12-eqgsf.mongodb.net/test?retryWr
 });
 
 var population = mongoose.Schema({ //보드에서 들어오는 유동인구 측정 데이터를 위한 스키마 생성
-    id: {
+    camera_id: {
         type: String,
         unique : true
       },
     date: {
         type: String,
     },
-    time: {
+    hour: {
         type: String,
       },
-    count: {
+    counting: {
         type: String,
       },
 })
@@ -56,43 +56,46 @@ var curpop = mongoose.model('p_data',population); //피플스키마의 모델 �
 
 
 var arr = [ 
-  { Phase: "Phase 1", Step: "Step 1", Task: "Task 1", Value: "5" },
-  { Phase: "Phase 1", Step: "Step 1", Task: "Task 1", Value: "5" },
-  { Phase: "Phase 1", Step: "Step 1", Task: "Task 2", Value: "10" },
-  { Phase: "Phase 1", Step: "Step 1", Task: "Task 2", Value: "10" },
-  { Phase: "Phase 1", Step: "Step 2", Task: "Task 1", Value: "15" },
-  { Phase: "Phase 1", Step: "Step 2", Task: "Task 1", Value: "15" },
-  { Phase: "Phase 1", Step: "Step 2", Task: "Task 2", Value: "20" },
-  { Phase: "Phase 1", Step: "Step 2", Task: "Task 2", Value: "20" },
-  { Phase: "Phase 2", Step: "Step 1", Task: "Task 1", Value: "25" },
-  { Phase: "Phase 2", Step: "Step 1", Task: "Task 1", Value: "25" },
-  { Phase: "Phase 2", Step: "Step 1", Task: "Task 2", Value: "30" },
-  { Phase: "Phase 2", Step: "Step 1", Task: "Task 2", Value: "30" },
-  { Phase: "Phase 2", Step: "Step 2", Task: "Task 1", Value: "35" },
-  { Phase: "Phase 2", Step: "Step 2", Task: "Task 1", Value: "35" },
-  { Phase: "Phase 2", Step: "Step 2", Task: "Task 2", Value: "40" },
-  { Phase: "Phase 2", Step: "Step 2", Task: "Task 2", Value: "40" }
+  { camera_id: '1', date: "200607", hour: '21', counting: '4'},
+  { camera_id: '1', date: "200607", hour: '21', counting: '5'},
+  { camera_id: '1', date: "200607", hour: '22', counting: '2'},
+  { camera_id: '1', date: "200607", hour: '22', counting: '1'},
+  { camera_id: '1', date: "200608", hour: '21', counting: '1'},
+  { camera_id: '1', date: "200608", hour: '21', counting: '4'},
+  { camera_id: '1', date: "200608", hour: '22', counting: '9'},
+  { camera_id: '1', date: "200608", hour: '22', counting: '1'},
+  { camera_id: '2', date: "200607", hour: '21', counting: '3'},
+  { camera_id: '2', date: "200607", hour: '21', counting: '1'},
+  { camera_id: '2', date: "200607", hour: '22', counting: '2'},
+  { camera_id: '2', date: "200608", hour: '21', counting: '1'},
+  { camera_id: '2', date: "200608", hour: '22', counting: '0'},
+  { camera_id: '3', date: "200607", hour: '21', counting: '1'},
+  { camera_id: '3', date: "200607", hour: '21', counting: '1'},
+  { camera_id: '3', date: "200607", hour: '22', counting: '2'},
+  { camera_id: '3', date: "200608", hour: '21', counting: '7'},
+  { camera_id: '3', date: "200608", hour: '22', counting: '8'},
+ 
 ];
 
 var count =0
-var groupBy = (arr, pahse, step,task) => {
+var groupBy = (arr, camera_id, date, hour) => {
 
-var pahseArr = [];
-var resultArr = [];
+var temparr = [];
+var resultarr = [];
 
 arr.map((item)=>{
 var pushed = false;
-pahseArr.map((ele)=>{
- if(ele===item.Phase){
+temparr.map((ele)=>{
+ if(ele===item.camera_id){
    pushed = true;
  }
 })
 if(!pushed){
- pahseArr.push(item.Phase);
+ temparr.push(item.camera_id);
 }     
 })
 
-    pahseArr.map((item)=>{
+    temparr.map((item)=>{
       var countarr1 = [];
       var countarr2 = [];
       
@@ -100,67 +103,67 @@ if(!pushed){
       arr.map((item1)=>{
         var pushed = false;
         countarr1.map((ele)=>{
-          if(ele===item1.Step){
+          if(ele===item1.date){
             pushed = true;
           }
         })
         if(!pushed){
-          countarr1.push(item1.Step);
+          countarr1.push(item1.date);
         } 
       })
 
       arr.map((item2)=>{
         var pushed = false;
         countarr2.map((ele)=>{
-          if(ele===item2.task){
+          if(ele===item2.hour){
             pushed = true;
           }
         })
         if(!pushed){
-          countarr2.push(item2.Task);
+          countarr2.push(item2.hour);
         } 
       })
 
       countarr1.map((item1)=>{
         countarr2.map((item2)=>{
-        var Taskarr=[];
         var sum = 0;
         arr.map((ele)=>{
-          if(ele.Step===item1 && ele.Phase===item && ele.Task===item2){
-            sum += parseFloat(ele.Value)
-            count++
-            console.log(count)
+          if(ele.date===item1 && ele.camera_id===item && ele.hour===item2){
+            sum += parseFloat(ele.counting)
           }
         })
-        resultArr.push({
-          Phase: item,
-          Step: item1,
-          Value: sum,
-          Task: item2
+        resultarr.push({
+          camera_id: item,
+          date: item1,
+          hour: item2,
+          counting: sum
          })
        })
       })
   })
 
-return resultArr
+return resultarr
 }   
 
-var result = groupBy(arr, 'Phase', 'Step','Task');
-var count1 =0;
+var rawresult = groupBy(arr, 'camera_id', 'date','hour');
 
+var result = rawresult.filter((arr, index, self) =>
+index === self.findIndex((t) => (t.camera_id === arr.camera_id && t.date === arr.date && t.hour === arr.hour)))
 
-//console.log(result);
+//console.log(clean[0].Phase);
   
-  for(var i=0; i<result.length; i++){
+for(var i=0; i<result.length; i++){
           var test= new curpop({ 
-              id: result[i].Phase,
-              date: result[i].Step,
-              time : result[i].Task,
-              count: result[i].Value,
+              camera_id: result[i].camera_id,
+              date: result[i].date,
+              hour : result[i].hour,
+              counting: result[i].counting,
+          },
+          {
+            unique: true
           })
           console.log(test);
           /*test.save(function(err, test){ //DB에 저장 이걸 막아놔도 create는 못막지만 사용시 접근을 id갯수만큼만 하니까 그닥 상관 없음
               if(err) return console.log("디비에 저장에러");
               //console.dir(test)*/
-  }
-                     
+}
