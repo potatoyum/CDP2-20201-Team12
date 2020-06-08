@@ -189,7 +189,7 @@ class Charts extends Component {
       date: strdate
     })
 
-    console.log(this.state.date + "strdate");
+   // console.log(this.state.date + "strdate");
   }
 
   render() {
