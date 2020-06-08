@@ -4,9 +4,14 @@ import CountUp from 'react-countup';
 
 class DynamicDoughnut extends Component {
 
+ static defaultProps = { 
+   counting: 'adf'
+  }
  static option = {
     maintainAspectRatio: false,
  }
+
+ 
 //이거 서버랑 연동
 getSeoPeople = ()=>{
   return  12;
@@ -31,7 +36,6 @@ getIncDec = () =>{
             }
 }
  getState = () => ({
-
   labels: [
     '북문',
     '서문',
@@ -58,10 +62,16 @@ getInitialState() {
 
 componentWillMount() {
   //컴포넌트 렌더링 되기 전에 생성할때 주기적으로 스테이트 바꿔줌.
-  setInterval(() => { //이거 서버 연동으로 바꿔야댐
+  //setInterval(() => { //이거 서버 연동으로 바꿔야댐
     this.setState(this.getState());
-  }, 5000);
+ // }, 5000);
 }
+
+/*
+1 - rest api 연동
+2 - 프롭스로 주기
+3 - 카메라 별로 다르게
+*/
 
   render() {
     return (
@@ -81,7 +91,7 @@ componentWillMount() {
         </div>
         </div>
         <div style = {{fontSize: 25+'px'}} >
-        의 유동인구가 있습니다.
+        의 유동인구가 있습니다. {this.props.counting.id}
           </div>
           <div>
             </div> 
