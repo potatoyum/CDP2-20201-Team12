@@ -4,9 +4,6 @@ import CountUp from 'react-countup';
 
 class DynamicDoughnut extends Component {
 
- static defaultProps = { 
-   counting: 'adf'
-  }
  static option = {
     maintainAspectRatio: false,
  }
@@ -35,6 +32,7 @@ getIncDec = () =>{
               return diff;
             }
 }
+/*
  getState = () => ({
   labels: [
     '북문',
@@ -42,7 +40,7 @@ getIncDec = () =>{
     '정문'
   ],
   datasets: [{
-    data: [this.getBukPeople(), this.getSeoPeople(), this.getJeongPeople()],
+    data: [10, 9, 8],
     backgroundColor: [
     '#CCC',
     '#36A2EB',
@@ -55,15 +53,61 @@ getIncDec = () =>{
     ]
   }]
 });
-
+*/
+/*
 getInitialState() {
   return this.getState();
-}
+}*/
+  /* JSON파일 구조
+  {
+    "userId" : 1,
+    "id" : 1, -> camera_id, counting, hour
+    "title" : "delectus aut autem",
+    "completed" : false
+  }
+  */
 
-componentWillMount() {
-  //컴포넌트 렌더링 되기 전에 생성할때 주기적으로 스테이트 바꿔줌.
+ callApi = async () => {
+  const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+  await response.json()
+  .then(res => 
+    {
+      //from String to Number
+      res.id*=1;
+      var BukCount = res.id;
+      var SeoCount = res.id*2;
+      var JeongCount = res.id*8;
+
+      this.setState({
+        labels: [
+         '북문',
+         '서문',
+         '정문'
+        ],
+       datasets: [{
+         data: [BukCount,SeoCount,JeongCount],
+          backgroundColor: [
+          '#CCC',
+         '#36A2EB',
+         '#FFCE56'
+          ],
+      hoverBackgroundColor: [
+      '#FF6384',
+      '#FF6384',
+      '#FF6384',
+      ]
+    }]
+  })})
+  .catch(err => console.log(err));
+
+  console.log('state 변경 오나료');
+
+  };
+  
+ componentWillMount() {  
+  this.callApi();
   //setInterval(() => { //이거 서버 연동으로 바꿔야댐
-    this.setState(this.getState());
+//    this.setState(this.getState());
  // }, 5000);
 }
 
@@ -91,7 +135,7 @@ componentWillMount() {
         </div>
         </div>
         <div style = {{fontSize: 25+'px'}} >
-        의 유동인구가 있습니다. {this.props.counting.id}
+        의 유동인구가 있습니다. 
           </div>
           <div>
             </div> 
