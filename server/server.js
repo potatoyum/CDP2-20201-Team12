@@ -55,24 +55,24 @@ var curpop = mongoose.model('p_data',population); //피플스키마의 모델 �
 
 
 var arr = [ 
-  { camera_id: '1', date: "200607", hour: '21', counting: '4'},
-  { camera_id: '1', date: "200607", hour: '21', counting: '5'},
-  { camera_id: '1', date: "200607", hour: '22', counting: '2'},
-  { camera_id: '1', date: "200607", hour: '22', counting: '1'},
-  { camera_id: '1', date: "200608", hour: '21', counting: '1'},
-  { camera_id: '1', date: "200608", hour: '21', counting: '4'},
-  { camera_id: '1', date: "200608", hour: '22', counting: '9'},
-  { camera_id: '1', date: "200608", hour: '22', counting: '1'},
-  { camera_id: '2', date: "200607", hour: '21', counting: '3'},
-  { camera_id: '2', date: "200607", hour: '21', counting: '1'},
-  { camera_id: '2', date: "200607", hour: '22', counting: '2'},
-  { camera_id: '2', date: "200608", hour: '21', counting: '1'},
-  { camera_id: '2', date: "200608", hour: '22', counting: '0'},
-  { camera_id: '3', date: "200607", hour: '21', counting: '1'},
-  { camera_id: '3', date: "200607", hour: '21', counting: '1'},
-  { camera_id: '3', date: "200607", hour: '22', counting: '2'},
-  { camera_id: '3', date: "200608", hour: '21', counting: '7'},
-  { camera_id: '3', date: "200608", hour: '22', counting: '8'},
+  { camera_id: '1', date: '200607', hour: '21', counting: '4'},
+  { camera_id: '1', date: '200607', hour: '21', counting: '5'},
+  { camera_id: '1', date: '200607', hour: '22', counting: '2'},
+  { camera_id: '1', date: '200607', hour: '22', counting: '1'},
+  { camera_id: '1', date: '200608', hour: '21', counting: '1'},
+  { camera_id: '1', date: '200608', hour: '21', counting: '4'},
+  { camera_id: '1', date: '200608', hour: '22', counting: '9'},
+  { camera_id: '1', date: '200608', hour: '22', counting: '1'},
+  { camera_id: '2', date: '200607', hour: '21', counting: '3'},
+  { camera_id: '2', date: '200607', hour: '21', counting: '1'},
+  { camera_id: '2', date: '200607', hour: '22', counting: '2'},
+  { camera_id: '2', date: '200608', hour: '21', counting: '1'},
+  { camera_id: '2', date: '200608', hour: '22', counting: '0'},
+  { camera_id: '3', date: '200607', hour: '21', counting: '1'},
+  { camera_id: '3', date: '200607', hour: '21', counting: '1'},
+  { camera_id: '3', date: '200607', hour: '22', counting: '2'},
+  { camera_id: '3', date: '200608', hour: '21', counting: '7'},
+  { camera_id: '3', date: '200608', hour: '22', counting: '8'},
  
 ];
 
@@ -156,12 +156,55 @@ for(var i=0; i<result.length; i++){
               hour : result[i].hour,
               counting: result[i].counting,
           })
-          test.save(function(err, test){
+          /*test.save(function(err, test){
             if(err) return console.log("에러남");
-          });
+          });*/
 }
+      //1. id와 date, hour별로 count값 가져오기
+      var wantspe = [ 
+      { camera_id: '1', date: '200607', hour: '21'}, 
+      { camera_id: '2', date: '200608', hour: '22'},
+      { camera_id: '1', date: '200608', hour: '21'}];
 
+      var length = wantspe.length;
+      var id = [], date = [], hour = [];
 
+      for(var i=0;i<length;i++){
+        id[i] = wantspe[i].camera_id;
+        date[i] = wantspe[i].date;
+        hour[i] = wantspe[i].hour;
+      }
 
+      for(var i=0;i<length;i++){
+        curpop.aggregate([
+          { $match: { camera_id: id[i]}},
+          { $match: { date: date[i]}},
+          { $match: { hour: hour[i]}},
+        ], function (err, result) {
+          if (err) return console.log(err);
+        } )
+        console.log(i+1,'번째로 선택된 id=', result[i].camera_id, 'date = ', result[i].date, 'hour = ',result[i].hour, 
+        '에 따른 counting = ',result[i].counting);
+      }//각각 값은 result[i].원하는 key값으로 접근 가능
 
+      //2. id별로 최근 시간의 count값 가져오기
+      var recent = [ { camera_id: '1'}, { camera_id: '2'},{ camera_id: '3'}]; 
+      var reclength = recent.length;
+      var recid = [];
+      var real;
 
+      for(var i=0;i<reclength;i++){
+        recid[i] = recent[i].camera_id;
+      }
+
+      for(var i=0;i<reclength;i++){
+        curpop.aggregate([
+          { $match: { camera_id: recid[i]}},
+          { $sort: { date: 1, hour: 1}},
+        ], function (err, res) {
+          if (err) return console.log(err);
+            //console.log(res);
+            real = [res.slice(-1)[0].camera_id, res.slice(-1)[0].counting];
+            console.log('id=', res.slice(-1)[0].camera_id,'의 최신 counting값 = ', res.slice(-1)[0].counting); 
+        } )
+      }
