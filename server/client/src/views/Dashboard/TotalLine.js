@@ -13,49 +13,109 @@ class TotalLine extends Component {
         super(props);
 
         //렌더링 되기 전으로 setState 바꾸기
-       var time = new Date().getHours();
+        var today = new Date();
+
+       var time = today.getHours();
+       var day = today.getDate();
+       var month = today.getMonth();
+       month +=1;    
+       var year = today.getFullYear();
+
+       day = String(day);
+       if(month<10)
+       {
+         month = String(month);
+         month = '0'+month;
+       }
+       else
+       month = String(month);
+
+        year = String(year);
+        year = year.substr(2,2);
+        day = year+month+day;
+       console.log(day);
        
         this.state = {
-          time: time
+          //현재 시간
+          time: time,
+          day: day
         };
 
       }
 
+      
+
+
+ //today - 200611
+ //i - 알아내고자 하는 시간(현재시간 한시간 직전까지 반복문을 통해 증가)
+ //cam - 카메라 아이디..
+  callApi = async (today,i,cam) => {
+    var cnt;
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+    await response.json()
+    .then(res => 
+      {
+        //from String to Numbe
+        res.id *=1;
+        res.id = res.id*15;
+        cnt = res.id;
+        
+        console.log(cnt);
+
+
+      })
+    .catch(err => console.log(err));
+  
+    return cnt;
+    };
+/*
+    
     componentWillMount = () => {  
       //  setInterval(() => {
+        
           this.setState({time: new Date().getHours()});
-            this.getData();
             console.log(this.state.time+'시');
   //        }, 5000);
 
     }
-
+*/
     getData1 = ()=>{
         var data1 = [];
         //서버에 요청한 데이터로 업뎃;
-        for(var i=0;i<this.state.time;i++)
+        for(var i=0;i<this.state.time+2;i++)
         {
-           data1.push(i+10);
+           data1.push(this.callApi(this.state.day,i,1));
+           console.log(i+'시 설정');
         }
+        console.log('하루 유동인구 설정 오나료');
+
         return data1;
     };
     getData2 = ()=>{
         //서버에 요청한 데이터로 업뎃;
         var data2 =[];
-        for(var i=0;i<this.state.time;i++)
+        for(var i=0;i<this.state.time+3;i++)
         {
-           data2.push(i+12);
+           data2.push(this.callApi(this.state.day,i,2));
+           console.log(i+'시 설정');
+
         }
+        
+           console.log('하루 유동인구 설정 오나료');
         return data2;
     };
     getData3 = ()=>{
                 //서버에 요청한 데이터로 업뎃;
 
         var data3 = [];
-        for(var i=0;i<this.state.time;i++)
+        for(var i=0;i<this.state.time+5;i++)
         {
-          data3.push(i+7);
+          data3.push(this.callApi(this.state.day,i,3));
+          console.log(i+'시 설정');
+
         }
+        
+           console.log('하루 유동인구 설정 오나료');
         return data3;
     };
 
@@ -122,7 +182,7 @@ getMainChartOpts = () => {
             beginAtZero: true,
             maxTicksLimit: 5,
             stepSize: Math.ceil(40 / 5),
-            max: 80,
+            max: 200,
           },
         }],
     },
