@@ -7,10 +7,14 @@ router.post('/', function(req,res){
     console.log(selected["date"]);
     console.log(selected["place"]);
 
+
     //select
+
+    
     res.send(
+
     );
 }); 
 
 
-module.exports=charts;
+module.exports=router;
