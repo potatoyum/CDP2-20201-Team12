@@ -205,6 +205,6 @@ for(var i=0; i<result.length; i++){
           if (err) return console.log(err);
             //console.log(res);
             real = [res.slice(-1)[0].camera_id, res.slice(-1)[0].counting];
-            console.log('id=', res.slice(-1)[0].camera_id,'의 최신 counting값 = ', res.slice(-1)[0].counting); 
+            console.log('id=', res.slice(-1)[0].camera_id,'의 최신 counting 값 = ', res.slice(-1)[0].counting); 
         } )
       }
