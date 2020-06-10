@@ -1,7 +1,7 @@
 export default {
   items: [
     {
-      name: '실시간',
+      name: 'Dashboard',
       url: '/dashboard',
       icon: 'icon-speedometer',
       badge: {
@@ -11,7 +11,7 @@ export default {
     },
     
     {
-      name: '날짜/구역별',
+      name: 'Charts',
       url: '/charts',
       icon: 'icon-pie-chart',
     },

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 import DynamicDoughnut from './DynamicDoughnut'
 import TotalLine from './TotalLine'
 import {
@@ -14,26 +14,21 @@ import {
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
- 
+
     var today = new Date(),
     //렌더링 되기 전으로 setState 바꾸기
     date = today.getFullYear()+'년 '+(today.getMonth()+1)+'월 '+today.getDate()+'일 '+today.getHours()+'시 기준';
 
     this.state = {
-      date: date,
-      /*
-      hour: 'hour',
-      counting:'counting'
-      */
+      date: date
     };
-    //this.callApi = this.callApi.bind(this);
   }
+
+  
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
-
-  
   render() {
-  
+
     return (
       <div className="animated fadeIn">
 
