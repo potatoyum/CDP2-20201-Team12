@@ -1,16 +1,15 @@
 var express = require('express');
 var router = express.Router();
-const curpop = require('../test');
+//const curpop = require('../test');
 router.post('/', function(req,res){
     const selected = req.body;
-    var id = selected["place"];
-    var date = selected["date"];
-    var hour = selected["hour"];
 
+    console.log(selected);
+    var date = selected['date'];
+    var id = selected['camera_id'];
 
-
+/*
     //1. id와 date, hour별로 count값 가져오기
-    
           curpop.aggregate([
             { $match: { camera_id: id}},
             { $match: { date: date}},
@@ -35,9 +34,10 @@ router.post('/', function(req,res){
               console.log('id=', res.slice(-1)[0].camera_id,'의 최신 counting 값 = ', res.slice(-1)[0].counting); 
           } )
         
-
+*/
     //select
     res.send(
+        {'counting' : [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]}
     );
 }); 
 

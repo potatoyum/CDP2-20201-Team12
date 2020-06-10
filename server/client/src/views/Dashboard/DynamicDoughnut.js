@@ -29,7 +29,7 @@ getTotal = () =>{
 */
 getIncDec = () =>{
   //한시간 전 것과 비교
-  var diff = 45;
+  var diff = 25;
    if(diff>=0)
             return'+'+ diff;
    else

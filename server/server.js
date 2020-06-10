@@ -42,6 +42,7 @@ io.on('connection', function(socket){
 
 
 //react와 통신할 api
+app.use(bodyParser.json());
 app.use(cors());
 app.use('/api/dashboard', dashboard);
 app.use('/api/charts', charts);

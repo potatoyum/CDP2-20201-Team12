@@ -3,7 +3,8 @@ var router = express.Router();
 
 router.get('/', function(req,res){
 
-    console.log("aaaaa");
+    console.log("doughnut api");
+    
     res.send(
         {"id":3}
     );

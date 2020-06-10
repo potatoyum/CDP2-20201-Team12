@@ -70,6 +70,7 @@ class DropDownItem extends Component {
 }
 
 class Charts extends Component {
+
   constructor(props) {
     super(props);
 
@@ -120,6 +121,8 @@ class Charts extends Component {
     }
     range = (max - min) / 5;
 
+    console.log(count[0]);
+
     for (var i = 0; i < 24; i++){
         if(count[i] < min + (range * 1))
           barBackground[i] = 'rgba(18,171,184,0.2)';
@@ -134,7 +137,7 @@ class Charts extends Component {
       
     }
 
-    console.log(barBackground);
+    //console.log(barBackground);
 
     this.setState({
       dropdownOpen: this.state.dropdownOpen,
@@ -192,6 +195,34 @@ class Charts extends Component {
    // console.log(this.state.date + "strdate");
   }
 
+  callApi() {
+    var counting = [];
+    fetch('http://localhost:3001/api/charts/',{ //api 사용
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        'date': this.state.date,
+        'camera_id': this.state.cam_id //date랑 카메라 id 보냄
+      })
+    })
+    .then(response => response.json()) 
+    .then(response =>{ //api에서 카운팅 배열(?) 받아옴,,,
+        console.log(response.counting);
+
+        counting=response.counting;
+
+       console.log(counting);
+    })
+    .then(response =>{
+      this.setChart(this.state.cam_id, this.state.date, counting) //읽어온 카운팅 값으로 차트 그리기?
+    })
+    .catch(err => console.log(err));
+  
+  }
+
+  handleChange
   render() {
     return (
       <div className="animated fadeIn">
@@ -233,24 +264,32 @@ class Charts extends Component {
                     alert('날짜를 먼저 선택해 주세요.');
                   else {
                     //
-                    fetch(id + '_' + this.state.date + '.json')
-                      .then(function (result) {
-                        return result.json();
-                      })
-                      .then(function (json) {
 
-
-                        this.setState({ list: json });
-                        var li = this.state.list;
-                        var count = li.count;
-                        
-                        this.setChart(id, title, count);
-
-                      }.bind(this))
-                      .catch(error => alert('해당 날짜와 지역에 데이터가 없습니다!'))
-
-                      
-                      
+                      this.setState({
+                        dropdownOpen: this.state.dropdownOpen,
+                        dropDownValue: title,
+                        list: this.state.list,
+                        cam_id: id,
+                        date: this.state.date, 
+                        cardTitleValue: {
+                          date: this.state.startDate.getFullYear() +'.'+ (this.state.startDate.getMonth() + 1) + '.' + this.state.startDate.getDate(),
+                          area: title
+                        },
+                        bar: {
+                          labels: ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9', '9-10', '10-11', '11-12', '12-13', '13-14', '14-15', '15-16', '16-17', '17-18', '18-19', '19-20', '20-21', '21-22', '22-23', '23-24'],
+                          datasets: [
+                            {
+                              label: '유동인구 수',
+                              backgroundColor: 'rgba(18,171,184,0.5)',
+                              borderColor: 'rgba(12,119,128,1)',
+                              borderWidth: 1,
+                              hoverBackgroundColor: 'rgba(18,171,184,0.5)',
+                              hoverBorderColor: 'rgba(12,119,128,1)',
+                              data: this.state.data,
+                            },
+                          ],
+                        }
+                      },this.callApi)                     
                   }
 
                 }.bind(this)}></DropDownItem>
