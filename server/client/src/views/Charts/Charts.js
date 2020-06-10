@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
-import { Card, CardBody, CardHeader, Row, Col, CardTitle } from 'reactstrap';
+import { Card, CardBody, Row, Col, CardTitle } from 'reactstrap';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -36,33 +36,22 @@ const options = {
 }
 
 class DropDownItem extends Component {
-  state = {
-    list: []
-  }
-  componentDidMount() {
-    fetch('list.json')
-      .then(function (result) {
-        return result.json();
-      })
-      .then(function (json) {
-        console.log(json);
-        this.setState({ list: json });
-      }.bind(this));
-  }
+  
   render() {
-    var arr = [];
-    for (var i = 0; i < this.state.list.length; i++) {
-      var li = this.state.list[i];
-      arr.push(<DropdownItem key={li.id} data-id={li.id} data-title={li.title} onClick={function (e) {
+    const id = [1,2,3];
+    const title = ['북문', '동문', '서문'];
+    var dropdownItem = [];
+    for (var i = 0; i < id.length; i++) {
+      dropdownItem.push(<DropdownItem key={id[i]} data-id={id[i]} data-title={title[i]} onClick={function (e) {
         e.preventDefault();
         this.props.onClick(e.target.dataset.id, e.target.dataset.title);
       }.bind(this)}>
-        {li.title}
+        {title[i]}
       </DropdownItem>)
     }
     return (
       <div>
-        {arr}
+        {dropdownItem}
       </div>
 
     );
@@ -216,7 +205,7 @@ class Charts extends Component {
        console.log(counting);
     })
     .then(response =>{
-      this.setChart(this.state.cam_id, this.state.date, counting) //읽어온 카운팅 값으로 차트 그리기?
+      this.setChart(this.state.cam_id, this.state.dropDownValue, counting) //읽어온 카운팅 값으로 차트 그리기?
     })
     .catch(err => console.log(err));
   
