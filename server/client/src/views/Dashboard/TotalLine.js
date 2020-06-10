@@ -68,7 +68,7 @@ class TotalLine extends Component {
   
     return cnt;
     };
-/*
+
     
     componentWillMount = () => {  
       //  setInterval(() => {
@@ -78,29 +78,30 @@ class TotalLine extends Component {
   //        }, 5000);
 
     }
-*/
+
     getData1 = ()=>{
         var data1 = [];
         //서버에 요청한 데이터로 업뎃;
-        for(var i=0;i<this.state.time+2;i++)
+        for(var i=0;i<this.state.time;i++)
         {
            data1.push(this.callApi(this.state.day,i,1));
            console.log(i+'시 설정');
         }
         console.log('하루 유동인구 설정 오나료');
-
+        console.log(data1[0]+'data1[0]');
         return data1;
     };
     getData2 = ()=>{
         //서버에 요청한 데이터로 업뎃;
         var data2 =[];
-        for(var i=0;i<this.state.time+3;i++)
+        for(var i=0;i<this.state.time;i++)
         {
            data2.push(this.callApi(this.state.day,i,2));
            console.log(i+'시 설정');
 
         }
         
+        console.log(data2[0]+'data2[0]');
            console.log('하루 유동인구 설정 오나료');
         return data2;
     };
@@ -108,13 +109,14 @@ class TotalLine extends Component {
                 //서버에 요청한 데이터로 업뎃;
 
         var data3 = [];
-        for(var i=0;i<this.state.time+5;i++)
+        for(var i=0;i<this.state.time;i++)
         {
           data3.push(this.callApi(this.state.day,i,3));
           console.log(i+'시 설정');
 
         }
         
+          console.log(data3+'data3[0]');
            console.log('하루 유동인구 설정 오나료');
         return data3;
     };
