@@ -83,28 +83,10 @@ var population = mongoose.Schema({ //보드에서 들어오는 유동인구 측�
 })
 
 module.exports = mongoose.model('p_data',population);//유동인구
-var curpop = mongoose.model('p_data',population); //피플스키마의 모델 생성
+var p_data = mongoose.model('p_data',population); //피플스키마의 모델 생성
 
 
 var arr = [ 
-{ camera_id: '1', date: '200607', hour: '21', counting: '4'},
-{ camera_id: '1', date: '200607', hour: '21', counting: '5'},
-{ camera_id: '1', date: '200607', hour: '22', counting: '2'},
-{ camera_id: '1', date: '200607', hour: '22', counting: '1'},
-{ camera_id: '1', date: '200608', hour: '21', counting: '1'},
-{ camera_id: '1', date: '200608', hour: '21', counting: '4'},
-{ camera_id: '1', date: '200608', hour: '22', counting: '9'},
-{ camera_id: '1', date: '200608', hour: '22', counting: '1'},
-{ camera_id: '2', date: '200607', hour: '21', counting: '3'},
-{ camera_id: '2', date: '200607', hour: '21', counting: '1'},
-{ camera_id: '2', date: '200607', hour: '22', counting: '2'},
-{ camera_id: '2', date: '200608', hour: '21', counting: '1'},
-{ camera_id: '2', date: '200608', hour: '22', counting: '0'},
-{ camera_id: '3', date: '200607', hour: '21', counting: '1'},
-{ camera_id: '3', date: '200607', hour: '21', counting: '1'},
-{ camera_id: '3', date: '200607', hour: '22', counting: '2'},
-{ camera_id: '3', date: '200608', hour: '21', counting: '7'},
-{ camera_id: '3', date: '200608', hour: '22', counting: '8'},
 
 ];
 
@@ -182,7 +164,7 @@ var result = rawresult.filter((arr, index, self) =>
 index === self.findIndex((t) => (  t.date === arr.date && t.camera_id === arr.camera_id&& t.hour === arr.hour)))
 
 for(var i=0; i<result.length; i++){
-        var test= new curpop({ 
+        var test= new p_data({ 
             camera_id: result[i].camera_id,
             date: result[i].date,
             hour : result[i].hour,

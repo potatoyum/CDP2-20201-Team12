@@ -82,14 +82,14 @@ getInitialState() {
        datasets: [{
          data: [BukCount,SeoCount,JeongCount],
           backgroundColor: [
-          '#CCC',
-         '#36A2EB',
-         '#FFCE56'
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56'
           ],
       hoverBackgroundColor: [
-      '#FF6384',
-      '#FF6384',
-      '#FF6384',
+      '#903EB0',
+      '#903EB0',
+      '#903EB0',
       ]
     }]
   })})
