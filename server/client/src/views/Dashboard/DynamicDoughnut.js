@@ -7,9 +7,12 @@ class DynamicDoughnut extends Component {
  static option = {
     maintainAspectRatio: false,
  }
-
+state={
+  total: 0,
+}
  
 //이거 서버랑 연동
+/*
 getSeoPeople = ()=>{
   return  12;
 }
@@ -19,12 +22,14 @@ getBukPeople = ()=>{
 getJeongPeople = ()=>{
   return  13;
 }
+
 getTotal = () =>{
-  return this.getSeoPeople()+this.getBukPeople()+this.getJeongPeople();
+  return 75;
 }
+*/
 getIncDec = () =>{
   //한시간 전 것과 비교
-  var diff = this.getTotal() - 10;
+  var diff = 45;
    if(diff>=0)
             return'+'+ diff;
    else
@@ -39,25 +44,14 @@ getIncDec = () =>{
     '서문',
     '정문'
   ],
-  datasets: [{
-    data: [10, 9, 8],
-    backgroundColor: [
-    '#CCC',
-    '#36A2EB',
-    '#FFCE56'
-    ],
-    hoverBackgroundColor: [
-    '#FF6384',
-    '#FF6384',
-    '#FF6384',
-    ]
-  }]
+  datasets: null
 });
 */
 /*
 getInitialState() {
   return this.getState();
-}*/
+}
+*/
   /* JSON파일 구조
   {
     "userId" : 1,
@@ -72,13 +66,14 @@ getInitialState() {
   await response.json()
   .then(res => 
     {
-      //from String to Number
+      //from String to Numbe
       res.id*=1;
       var BukCount = res.id;
       var SeoCount = res.id*2;
       var JeongCount = res.id*8;
-
+      var Total = BukCount+SeoCount+JeongCount;
       this.setState({
+        total: Total,
         labels: [
          '북문',
          '서문',
@@ -99,23 +94,23 @@ getInitialState() {
     }]
   })})
   .catch(err => console.log(err));
-
   console.log('state 변경 오나료');
-
   };
   
  componentWillMount() {  
+   console.log("초기설정");
   this.callApi();
-  //setInterval(() => { //이거 서버 연동으로 바꿔야댐
-//    this.setState(this.getState());
- // }, 5000);
 }
 
-/*
-1 - rest api 연동
-2 - 프롭스로 주기
-3 - 카메라 별로 다르게
-*/
+componentDidMount(){
+//주기적으로 업데이트..
+  setInterval(()=>{
+//    console.log("업데이트설정");
+    if(this.shouldComponentUpdate)
+       this.callApi();
+ },5000); 
+}
+
 
   render() {
     return (
@@ -130,7 +125,7 @@ getInitialState() {
         </div>
         <div style = {{width:100+'%'}}>
         <div style={{height:50+'px', width:200+'px',backgroundColor : 'white',textAlign:'center',borderRadius:12+'px',marginTop:10+'px',marginBottom:10+'px'}}>
-        <CountUp start={0} end={this.getTotal()} />
+        <CountUp start={0} end={this.state.total} />
         명  (<span>{this.getIncDec()}</span>)
         </div>
         </div>
