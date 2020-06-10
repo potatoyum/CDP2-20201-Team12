@@ -3,10 +3,11 @@ var router = express.Router();
 
 router.get('/', function(req,res){
 
+    console.log("aaaaa");
     res.send(
-        //최근 값 넣으면 됨
+        {"id":3}
     );
 }); 
 
 
-module.exports=dashboard;
+module.exports=router;
