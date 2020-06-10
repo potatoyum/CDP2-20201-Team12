@@ -3,9 +3,15 @@ const mongoose = require('mongoose');
 var app = express();
 const cors= require('cors');
 const bodyParser = require('body-parser');
+
+const dashboard = require("./controllers/dashboard");
+const charts = require("./controllers/charts");
+
 var server = app.listen(3001, function(){
     console.log("aaaaaaaa");
 })
+
+//pi와 socket 통신
 var io = require('socket.io').listen(9001);
 var roomName;
 var arr_counting = [];
@@ -34,14 +40,13 @@ io.on('connection', function(socket){
 //    });
 })
 
-app.get('/', function(req,res){
-    res.send("hello");
-})
 
+//react와 통신할 api
 app.use(cors());
-app.use('/api', (req,res)=>  res.json({username:'aaaaa'}));
+app.use('/api/dashboard', dashboard);
+app.use('/api/charts', charts);
 
-
+//db 연결
 var database;
 var db = mongoose.connection;
 db.on('error', console.error);
