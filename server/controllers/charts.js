@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const curpop = require('../test');
+const curpop = require('../server');
 router.post('/', function(req,res){
     const selected = req.body;
     var id = selected["place"];
