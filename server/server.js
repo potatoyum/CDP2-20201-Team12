@@ -82,9 +82,9 @@ var population = mongoose.Schema({ //보드에서 들어오는 유동인구 측�
     },
 })
 
-module.exports = mongoose.model('p_data',population);//유동인구
-var p_data = mongoose.model('p_data',population); //피플스키마의 모델 생성
 
+var p_data = mongoose.model('p_data',population); //피플스키마의 모델 생성
+module.exports = p_data;//유동인구
 
 var arr = [ 
 
