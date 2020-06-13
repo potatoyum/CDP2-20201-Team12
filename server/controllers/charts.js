@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
-const curpop = require('../server.js');
+const curpop = require('../server');
+
+//걍 여기로 코드 복붙하고 값 임의로 넣어서 디비에서 가져올 수 있는지 확인해보삼
+
+
+
 router.post('/', function(req,res){
     const selected = req.body;
 
