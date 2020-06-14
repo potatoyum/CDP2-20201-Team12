@@ -140,7 +140,7 @@ curpop.aggregate([
         for(var i=0;i<len;i++){
             del[i] = rres[i]._id;
         }
-       res.send({"one":del[5],"two":del[3], "three":del[4], "paste_one":del[1], "paste_two":del[2], "paste_three": del[0]});
+       res.send({"one":del[5],"two":del[3], "three":del[4], "past_one":del[1], "past_two":del[2], "past_three": del[0]});
     } )
 }); 
 

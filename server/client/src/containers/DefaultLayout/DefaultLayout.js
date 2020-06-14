@@ -29,9 +29,9 @@ class DefaultLayout extends Component {
     return (
       <div className="app">
         <AppHeader fixed style={{border: "none"}}>
-          <Suspense  fallback={this.loading()}>
+
             <DefaultHeader/>
-          </Suspense>
+
         </AppHeader>
         <div className="app-body">
           <AppSidebar fixed display="lg">

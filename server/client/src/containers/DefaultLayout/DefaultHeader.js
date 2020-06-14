@@ -23,20 +23,15 @@ class DefaultHeader extends Component {
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppSidebarToggler className="d-md-down-none" display="lg" />
         <AppNavbarBrand style={{marginLeft: 200 + 'px' }} href={"#"}
-          full={{ src: logo, width: 450, height: 50, alt: 'CoreUI Logo'}}
-          minimized={{ src: logo, width: 400, height: 50, alt: 'CoreUI Logo'}}
+          full={{ src: logo, width: 450, height: 40, alt: 'CoreUI Logo'}}
+          minimized={{ src: logo, width: 450, height: 40, alt: 'CoreUI Logo'}}
         />
 
         <Nav className="d-md-down-none" navbar style={{visibility:'hidden'}}>
           <NavItem className="px-3">
             <NavLink to="/dashboard" className="nav-link" >Dashboard</NavLink>
           </NavItem>
-          <NavItem className="px-3">
-            <Link to="/users" className="nav-link">Users</Link>
-          </NavItem>
-          <NavItem className="px-3">
-            <NavLink to="#" className="nav-link">Settings</NavLink>
-          </NavItem>
+         
         </Nav>
       </React.Fragment>
     );
