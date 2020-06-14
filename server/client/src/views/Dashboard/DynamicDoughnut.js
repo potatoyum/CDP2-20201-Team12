@@ -68,9 +68,9 @@ getInitialState() {
     {
       //from String to Numbe
       res.id*=1;
-      var BukCount = res.one;
-      var SeoCount = res.two;
-      var JeongCount = res.three;
+      var BukCount = parseInt(res.one);
+      var SeoCount = parseInt(res.two);
+      var JeongCount = parseInt(res.three);
       var Total = BukCount+SeoCount+JeongCount;
       this.setState({
         total: Total,
