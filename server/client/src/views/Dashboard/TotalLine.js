@@ -27,6 +27,7 @@ class TotalLine extends Component {
          month = String(month);
          month = '0'+month;
        }
+       
        else
        month = String(month);
 
@@ -37,8 +38,8 @@ class TotalLine extends Component {
        
         this.state = {
           //현재 시간
-          time: time,
-          day: day
+          time: 0,
+          day: 8
         };
 
       }
@@ -82,11 +83,13 @@ class TotalLine extends Component {
     getData1 = ()=>{
         var data1 = [];
         //서버에 요청한 데이터로 업뎃;
-        for(var i=0;i<this.state.time;i++)
-        {
-           data1.push(this.callApi(this.state.day,i,1));
-           console.log(i+'시 설정');
-        }
+        // for(var i=0;i<this.state.time;i++)
+        // {
+        //    data1.push(this.callApi(this.state.day,i,1));
+        //    console.log(i+'시 설정');
+        // }
+
+        data1=[4,3,2,2,3,5,7,11,37,39,21,23,38,26,21,23,30,28,42,26,15,11,6,5];
         console.log('하루 유동인구 설정 오나료');
         console.log(data1[0]+'data1[0]');
         return data1;
@@ -94,13 +97,14 @@ class TotalLine extends Component {
     getData2 = ()=>{
         //서버에 요청한 데이터로 업뎃;
         var data2 =[];
-        for(var i=0;i<this.state.time;i++)
-        {
-           data2.push(this.callApi(this.state.day,i,2));
-           console.log(i+'시 설정');
+        // for(var i=0;i<this.state.time;i++)
+        // {
+        //    data2.push(this.callApi(this.state.day,i,2));
+        //    console.log(i+'시 설정');
 
-        }
+        // }
         
+        data2 = [4,3,2,1,1,2,5,7,29,37,31,24,36,31,23,19,21,15,39,24,11,9,8,5]
         console.log(data2[0]+'data2[0]');
            console.log('하루 유동인구 설정 오나료');
         return data2;
@@ -109,13 +113,15 @@ class TotalLine extends Component {
                 //서버에 요청한 데이터로 업뎃;
 
         var data3 = [];
-        for(var i=0;i<this.state.time;i++)
-        {
-          data3.push(this.callApi(this.state.day,i,3));
-          console.log(i+'시 설정');
+        // for(var i=0;i<this.state.time;i++)
+        // {
+        //   data3.push(this.callApi(this.state.day,i,3));
+        //   console.log(i+'시 설정');
 
-        }
+        // }
         
+        data3=[3,2,1,2,3,2,4,8,21,32,28,21,35,20,22,18,16,21,34,19,15,10,8,5]
+
           console.log(data3+'data3[0]');
            console.log('하루 유동인구 설정 오나료');
         return data3;
@@ -184,7 +190,7 @@ getMainChartOpts = () => {
             beginAtZero: true,
             maxTicksLimit: 5,
             stepSize: Math.ceil(40 / 5),
-            max: 200,
+            max: 100,
           },
         }],
     },
