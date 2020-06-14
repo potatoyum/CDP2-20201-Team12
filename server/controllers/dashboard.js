@@ -131,21 +131,17 @@ router.get('/', function(req,res){
     console.log("doughnut api");
     var del =[];
 
-    curpop.aggregate([
-        { $group :{_id : '$counting'}},
-        ], function (err, rres) {
-        if (err) return console.log(err);
-            var len = rres.length;
-            for(var i=0;i<len;i++){
-                del[i] = rres[i]._id;
-            }
-            res.send( {"one":del[0],"two":del[1], "three":del[2]});
-        } )
-    
-
-    /*res.send(
-        {"one":3,"two":10, "three":20}
-    );*/
+curpop.aggregate([
+    { $group :{ _id : '$counting'}},
+    { $sort : { _id : 1}}
+    ], function (err, rres) {
+    if (err) return console.log(err);
+        var len = rres.length;
+        for(var i=0;i<len;i++){
+            del[i] = rres[i]._id;
+        }
+       res.send({"one":del[5],"two":del[3], "three":del[4], "paste_one":del[1], "paste_two":del[2], "paste_three": del[0]});
+    } )
 }); 
 
 
