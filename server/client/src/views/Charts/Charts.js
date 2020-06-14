@@ -95,22 +95,18 @@ class Charts extends Component {
     };
   }
   setChart(id, title, count) {
-    var min = count[0], max = count[0], range;
+    var range;
     var barBackground = [];
-    for(var i = 0; i < count.length; i++){
-      if(min < count[i])
-        min = min;
-      else
-        min = count[i];
 
-      if(max > count[i])
-        max = max;
-      else
-        max = count[i];
-    }
+    console.log(count);
+    
+    var max = Math.max.apply(null, count);
+    var min = Math.min.apply(null, count);
+    console.log(max);
+    console.log(min);
     range = (max - min) / 5;
 
-    console.log(count[0]);
+    //console.log(count[0]);
 
     for (var i = 0; i < 24; i++){
         if(count[i] < min + (range * 1))
@@ -126,7 +122,7 @@ class Charts extends Component {
       
     }
 
-    //console.log(barBackground);
+    console.log(barBackground);
 
     this.setState({
       dropdownOpen: this.state.dropdownOpen,
@@ -198,8 +194,12 @@ class Charts extends Component {
     })
     .then(response => response.json()) 
     .then(response =>{ //api에서 카운팅 배열(?) 받아옴,,,
-        console.log(response.counting);
+        console.log("값"+response.counting);
 
+        if(!response.counting[0]){
+          alert('해당 날짜와 지역에 데이터가 없습니다!')
+          return;
+        }
         counting=response.counting;
 
        console.log(counting);
@@ -207,7 +207,7 @@ class Charts extends Component {
     .then(response =>{
       this.setChart(this.state.cam_id, this.state.dropDownValue, counting) //읽어온 카운팅 값으로 차트 그리기?
     })
-    .catch(err => console.log(err));
+    .catch(error => alert('해당 날짜와 지역에 데이터가 없습니다!'))
   
   }
 

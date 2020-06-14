@@ -292,13 +292,20 @@ router.post('/', function(req,res){
             { $match: { date: realdate}},
             { $sort: { _id: 1 } }
             ], function (err, ress) {
-            if (err) return console.log(err);
-                var len = ress.length;
-                for(var i=0;i<len;i++){
-                del[i] = ress[i].counting;
+                if (err) {
+                    console.error("연결 실패", err);
+                    return;
                 }
-                res.send({'counting' : del});
-            } )
+                else{
+                    var len = ress.length;
+                    for(var i=0;i<len;i++){
+                    del[i] = ress[i].counting;
+                    }
+                    res.send({'counting' : del});
+                }
+                
+            } 
+            )
 
 }); 
 
