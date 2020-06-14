@@ -68,7 +68,7 @@ class Charts extends Component {
 
     this.state = {
       dropdownOpen: false,
-      dropDownValue: '지역 선택',
+      dropDownValue: '구역 선택',
       list: [],
       cam_id: 0,
       startDate: new Date(),
@@ -76,7 +76,7 @@ class Charts extends Component {
       date: '',
       cardTitleValue:{
         date: '날짜 선택',
-        area: '(지역 선택)',
+        area: '(구역 선택)',
       },
       bar: {
         labels: ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9', '9-10', '10-11', '11-12', '12-13', '13-14', '14-15', '15-16', '16-17', '17-18', '18-19', '19-20', '20-21', '21-22', '22-23', '23-24'],
@@ -245,7 +245,7 @@ class Charts extends Component {
                 {this.state.dropDownValue}
               </DropdownToggle>
               <DropdownMenu style={{ width: 100 + '%'}}>
-                <DropdownItem disabled>지역 선택</DropdownItem>
+                <DropdownItem disabled>구역 선택</DropdownItem>
                 <DropdownItem divider />
                 <DropDownItem onClick={function (id, title) {
                   console.log(id);
