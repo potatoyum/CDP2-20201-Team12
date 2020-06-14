@@ -126,7 +126,7 @@ class TotalLine extends Component {
     labels: ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7','7-8','8-9', '9-10','10-11', '11-12', '12-13', '13-14', '14-15', '15-16', '16-17', '17-18', '18-19', '19-20', '20-21', '21-22', '22-23', '23-24'],
     datasets: [
       {
-        label: '북문',
+        label: 'IT 융복합관',
         backgroundColor: 'transparent',
         borderColor: brandInfo,
         pointHoverBackgroundColor: '#fff',
@@ -134,7 +134,7 @@ class TotalLine extends Component {
         data: this.getData1()
       },
       {
-        label: '서문',
+        label: 'IT 4호관',
         backgroundColor: 'transparent',
         borderColor: brandSuccess,
         pointHoverBackgroundColor: '#fff',
@@ -142,7 +142,7 @@ class TotalLine extends Component {
         data: this.getData2()
       },
       {
-        label: '정문',
+        label: '공대 9호관',
         backgroundColor: 'transparent',
         borderColor: brandDanger,
         pointHoverBackgroundColor: '#fff',

@@ -75,9 +75,9 @@ getInitialState() {
       this.setState({
         total: Total,
         labels: [
-         '북문',
-         '서문',
-         '정문'
+         'IT 융복합관',
+         'IT 4호관',
+         '공대 9호관'
         ],
        datasets: [{
          data: [BukCount,SeoCount,JeongCount],

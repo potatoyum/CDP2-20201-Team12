@@ -39,7 +39,7 @@ class DropDownItem extends Component {
   
   render() {
     const id = [1,2,3];
-    const title = ['북문', '동문', '서문'];
+    const title = ['IT 융복합관', 'IT 4호관', '공대 9호관'];
     var dropdownItem = [];
     for (var i = 0; i < id.length; i++) {
       dropdownItem.push(<DropdownItem key={id[i]} data-id={id[i]} data-title={title[i]} onClick={function (e) {
@@ -75,7 +75,7 @@ class Charts extends Component {
       barBackground: [],
       date: '',
       cardTitleValue:{
-        date: '(날짜 선택)',
+        date: '날짜 선택',
         area: '(지역 선택)',
       },
       bar: {
@@ -219,7 +219,7 @@ class Charts extends Component {
           <Col style={{height: "100%"}}>
             <Card style={{backgroundColor: '#f7f9fb'}}>
               <CardTitle className="text-center" tag="h3" style={{ marginTop: 20 + 'px' }}>
-                {this.state.cardTitleValue.date} {this.state.cardTitleValue.area}
+                [{this.state.cardTitleValue.date}] {this.state.cardTitleValue.area}
               </CardTitle>
               <CardBody>
                 <div className="chart-wrapper">
