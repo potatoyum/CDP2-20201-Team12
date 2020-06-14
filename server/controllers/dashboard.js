@@ -6,7 +6,7 @@ router.get('/', function(req,res){
     console.log("doughnut api");
     
     res.send(
-        {"id":3}
+        {"one":3,"two":10, "three":20}
     );
 }); 
 
