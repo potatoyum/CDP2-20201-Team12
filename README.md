@@ -1,5 +1,5 @@
 # :chart_with_upwards_trend: PECA(PEople Counting & Analysis, 피카)		
- 라즈베리파이3 카메라 모듈로 분석한 유동인구를 웹 페이지에서 그래프로 시각화하여 나타내는 시스템.
+ 라즈베리파이3 카메라 모듈로 분석한 유동인구를 웹 페이지에서 실시간으로 그래프로 시각화하여 나타내는 시스템.
  	
 ### :movie_camera: 데모 영상 - https://www.youtube.com/watch?v=ZDeJ9r8GLT4&feature=youtu.be
 ### :raising_hand: 수행 배경 및 기대 효과
