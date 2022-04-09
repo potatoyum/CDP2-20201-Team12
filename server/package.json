@@ -17,7 +17,7 @@
     "enumerable": "0.0.1",
     "express": "^4.17.1",
     "jquery": "^3.5.1",
-    "moment": "^2.26.0",
+    "moment": "^2.29.2",
     "moment-timezone": "^0.5.31",
     "mongodb": "^3.5.6",
     "mongoose": "^5.9.10",
